@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:13.6
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=website
+      - POSTGRES_HOST_AUTH_METHOD=trust
+  web:
+    container_name: 'apache'
+    build: .
+    depends_on:
+      - db
+    ports:
+      - '80:80'
+    environment:
+      DATABASE_URL: postgres://postgres:@db:5432/website
+      DB_INSECURE: true
+      WP_DEBUG: true
+    volumes:
+      - "./:/var/www/html"
+
+volumes:
+  db:
+    driver: local
