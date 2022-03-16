@@ -52,10 +52,10 @@
 	function wpsql_data_seek($result, $offset)
 		{ return pg_result_seek ( $result, $offset ); }
 	function wpsql_error()
-		{ if( $GLOBALS['pg4wp_conn']) return pg_last_error(); else return ''; }
+		{ if( $GLOBALS['pg4wp_conn']) return pg_last_error($GLOBALS['pg4wp_conn']); else return ''; }
 	function wpsql_fetch_assoc($result) { return pg_fetch_assoc($result); }
-	function wpsql_escape_string($s) { return pg_escape_string($s); }
-	function wpsql_real_escape_string($s,$c=NULL) { return pg_escape_string($s); }
+	function wpsql_escape_string($s) { return pg_escape_string($GLOBALS['pg4wp_conn'], $s); }
+	function wpsql_real_escape_string($s,$c=NULL) { pg_escape_string($s); }
 	function wpsql_get_server_info() { return '5.0.30'; } // Just want to fool wordpress ...
 	
 /**** Modified version of wpsql_result() is at the bottom of this file
@@ -134,7 +134,7 @@
 		$initial = $sql;
 		$sql = pg4wp_rewrite( $sql);
 		
-		$GLOBALS['pg4wp_result'] = pg_query($sql);
+		$GLOBALS['pg4wp_result'] = pg_query($GLOBALS['pg4wp_conn'], $sql);
 		if( (PG4WP_DEBUG || PG4WP_LOG_ERRORS) && $GLOBALS['pg4wp_result'] === false && $err = pg_last_error())
 		{
 			$ignore = false;
