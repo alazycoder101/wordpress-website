@@ -27,10 +27,15 @@ $replaces = array(
 	'new wpdb'	=> 'new wpdb2',
 	'mysql_'	=> 'wpsql_',
 	'<?php'		=> '',
-	'?>'		=> '',
-    'is_resource( $this->dbh )' => '(is_resource($this->dbh) || $this->dbh instanceof \PgSql\Connection)',
-    'is_resource( $this->result )' => '(is_resource($this->result) || $this->result instanceof \PgSql\Result)'
+	'?>'		=> ''
 );
+
+// for PHP8.1.0 https://www.php.net/manual/en/class.pgsql-result.php
+if (class_exists('PgSql\Result')) {
+    $replaces['is_resource( $this->dbh )'] = '(is_resource($this->dbh) || $this->dbh instanceof \PgSql\Connection)';
+    $replaces['is_resource( $this->result )'] = '(is_resource($this->result) || $this->result instanceof \PgSql\Result)';
+
+}
 // Ensure class uses the replaced mysql_ functions rather than mysqli_
 define( 'WP_USE_EXT_MYSQL', true);
 eval( str_replace( array_keys($replaces), array_values($replaces), file_get_contents(ABSPATH.'/wp-includes/wp-db.php')));
