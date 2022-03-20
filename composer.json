@@ -1,0 +1,63 @@
+{
+  "name": "alazycoder101/wordpress-website",
+  "description": "A basic project to run WordPress on Heroku",
+  "homepage": "https://github.com/alazycoder101/wordpress-website",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Lazy Coder",
+      "email": "alazycoder101@gmail.com",
+      "homepage": "https://alazycoder504866139.wordpress.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">7.0.0",
+    "ext-gd": "*",
+    "wp-cli/wp-cli-bundle": "*"
+  },
+  "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "wordpress/wordpress",
+        "version": "5.2.3",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/wordpress/wordpress/archive/5.2.3.zip"
+        }
+      }
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/xyu/batcache"
+    },
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
+    },
+    {
+      "type": "composer",
+      "url": "https://wp-cli.org/package-index"
+    }
+  ],
+  "extra": {
+    "installer-paths": {
+      "vendor/wordpress/wordpress-ext/wp-content/mu-plugins/{$name}/": [
+        "automattic/batcache",
+        "wpackagist-plugin/redis-cache",
+        "wpackagist-plugin/secure-db-connection"
+      ],
+      "vendor/wordpress/wordpress-ext/wp-content/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "vendor/wordpress/wordpress-ext/wp-content/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
+    }
+  },
+  "scripts": {
+    "post-install-cmd": [
+    ]
+  }
+}
