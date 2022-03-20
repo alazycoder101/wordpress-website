@@ -28,7 +28,8 @@ $replaces = array(
 	'mysql_'	=> 'wpsql_',
 	'<?php'		=> '',
 	'?>'		=> '',
-    'is_resource( $this->dbh )' => '(is_resource($this->dbh) || $this->dbh instanceof \PgSql\Connection)'
+    'is_resource( $this->dbh )' => '(is_resource($this->dbh) || $this->dbh instanceof \PgSql\Connection)',
+    'is_resource( $this->result )' => '(is_resource($this->result) || $this->result instanceof \PgSql\Result)'
 );
 // Ensure class uses the replaced mysql_ functions rather than mysqli_
 define( 'WP_USE_EXT_MYSQL', true);
