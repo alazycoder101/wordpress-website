@@ -576,6 +576,11 @@ WHERE '.$where : '').';';
 			$sql = str_replace( 'OPTIMIZE TABLE', 'VACUUM', $sql);
 		}
 		// Handle 'SET NAMES ... COLLATE ...'
+		elseif( $sql == "SET NAMES ''")
+		{
+			$logto = 'SETNAMES';
+			$sql = "SET NAMES 'utf8'";
+		}
 		elseif( 0 === strpos($sql, 'SET NAMES') && false !== strpos($sql, 'COLLATE'))
 		{
 			$logto = 'SETNAMES';
@@ -683,6 +688,9 @@ WHERE '.$where : '').';';
 	
 	function wpsql_errno( $connection) {
 		$result = pg_get_result($connection);
+        if (!$result) {
+            return 0;
+        }
 		$result_status = pg_result_status($result);
 		return pg_result_error_field($result_status, PGSQL_DIAG_SQLSTATE);
 	}

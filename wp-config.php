@@ -13,11 +13,11 @@
  *
  * @package WordPress
  */
-define('SENDGRID_API_KEY', $_ENV["SENDGRID_API_KEY"]);
+define('SENDGRID_API_KEY', getenv("SENDGRID_API_KEY"));
 
 define('ALTERNATE_WP_CRON', false);
 // ** Heroku Postgres settings - from Heroku Environment ** //
-$db = parse_url($_ENV["DATABASE_URL"]);
+$db = parse_url(getenv("DATABASE_URL"));
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
@@ -75,8 +75,8 @@ $table_prefix  = 'wp_';
  * It is strongly recommended that plugin and theme developers use WP_DEBUG
  * in their development environments.
  */
-define('WP_DEBUG', $_ENV["WP_DEBUG"]==true || false);
-define('WP_DEBUG_LOG', $_ENV["WP_DEBUG_LOG"]=='true' || false);
+define('WP_DEBUG', getenv("WP_DEBUG")=='true' || false);
+define('WP_DEBUG_LOG', getenv("WP_DEBUG_LOG")=='true' || false);
 // @ini_set( 'display_errors', 0 );
 
 /* That's all, stop editing! Happy blogging. */
