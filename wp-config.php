@@ -13,6 +13,9 @@
  *
  * @package WordPress
  */
+require_once('vendor/autoload.php');
+require_once('config/application.php');
+
 define('SENDGRID_API_KEY', getenv("SENDGRID_API_KEY"));
 
 define('ALTERNATE_WP_CRON', false);
@@ -77,17 +80,14 @@ $table_prefix  = 'wp_';
  */
 define('WP_DEBUG', getenv("WP_DEBUG")=='true' || false);
 define('WP_DEBUG_LOG', getenv("WP_DEBUG_LOG")=='true' || false);
+define('WP_DEBUG_DISPLAY', getenv("WP_DEBUG_LOG")=='true' || false);
 // @ini_set( 'display_errors', 0 );
 
 /* That's all, stop editing! Happy blogging. */
-
-/** Absolute path to the WordPress directory. */
-if ( !defined('ABSPATH') )
-	define('ABSPATH', dirname(__FILE__) . '/');
 
 if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' == $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
     $_SERVER['HTTPS'] = 'on';
 }
 
 /** Sets up WordPress vars and included files. */
-require_once(ABSPATH . 'wp-settings.php');
+require_once('wordpress/wp-settings.php');
